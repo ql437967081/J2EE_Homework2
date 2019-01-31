@@ -22,12 +22,6 @@ import java.util.Map;
 @RequestMapping("/goods_list")
 public abstract class GoodsListController {
 
-    private String checkLoginFailed(HttpSession session) {
-        if (session == null || session.getAttribute("login") == null)
-            return "redirect:/login";
-        return null;
-    }
-
     @Autowired
     private GoodsService goodsService;
 
@@ -42,9 +36,6 @@ public abstract class GoodsListController {
 
     @GetMapping
     public String showGoods(HttpServletRequest request, HttpSession session) {
-        String fail = checkLoginFailed(session);
-        if (fail != null)
-            return fail;
 
         CartBean cart = (CartBean) session.getAttribute("cart");
 
@@ -63,9 +54,6 @@ public abstract class GoodsListController {
 
     @PostMapping
     public String buyGoods(HttpServletRequest request, HttpSession session) {
-        String fail = checkLoginFailed(session);
-        if (fail != null)
-            return fail;
         CartBean cart = (CartBean) session.getAttribute("cart");
 
         Map<Integer, Integer> order = cart.getOrder();
